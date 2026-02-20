@@ -1,31 +1,36 @@
 
-// \*  
-// * OOPSBannerApp UC7 – Store Character Pattern in a Class  
-// *  
-// * This use case extends UC6 by implementing a CharacterPatternMap class to encapsulate  
-// * character-to-pattern mappings. The application retrieves and displays the "OOPS"  
-// * banner using these mappings. This approach enhances code organization and modularity.  
-// *  
-// * @author Developer  
-// * @version 7.0  
-// */
+// OOPSBannerApp – Use Map for Character Patterns and Render via Function   
+// This use case extends UC7 by utilizing advanced Object-Oriented Programming concepts  
+// such as the Collections Framework to manage character patterns in a more flexible  
+// and efficient manner. The application retrieves and displays the "OOPS" banner  
+// using a HashMap thereby enhancing code organization and modularity.    
+// @author Developer  
+// @version 8.0  
 
-// Extend the User Story 6 to implement a CharacterPatternMap class to encapsulate  
-// character-to-pattern mappings. The application retrieves and displays the "OOPS"  
-// banner using these mappings. Thereby addressing the drawback of not having  
-// centralized character pattern management system.
+
+// Extend the User Story 7 to utilize advanced Object-Oriented Programming concepts  
+// such as the Collections Framework to manage character patterns in a more flexible  
+// and efficient manner. The application retrieves and displays the "OOPS" banner  
+// using these mappings.
 
 // Key Requirements:  
-// 1. Create CharacterPatternMap class to hold character and its pattern  
-// 2. Implement methods to create and retrieve character patterns  
-// 3. Use CharacterPatternMap to display the "OOPS" banner  
-// 4. Implement modular and reusable character pattern management
+// 1. Use HashMap to store ASCII art patterns for characters  
+// 2. Create methods to generate and retrieve character patterns  
+// 3. Retrieve and display patterns for the message "OOPS"  
+// 4. Implement modular and reusable character pattern system  
+// 5. Utilize Collections Framework for pattern management
 
 
-public class OOPSBannerApp {
-    static class CharacterPatternMap {
-		public static String[] getOPattern() {
-			return new String[] {
+     // 1. Define a method createCharacterMap() to initialize a HashMap with character patterns
+     // 2. Implement displayBanner(String message, HashMap<Character, String[]> charMap)
+     //    to render the banner for the given message using the character map
+
+import java.util.HashMap;
+public class OOPSBannerApp{
+     public static HashMap<Character, String[]> createCharacterMap() {
+         HashMap<Character, String[]> charMap = new HashMap<>();
+         // Populate charMap with patterns for 'O', 'S'
+         charMap.put('O',new String[] {
 				"   ***   ",
 				" **   ** ",
 				"**     **",
@@ -35,12 +40,8 @@ public class OOPSBannerApp {
 				"**     **",
 				" **   ** ",
 				"   ***   "
-			};
-		}
-	
-	
-		public static String[] getPPattern() {
-			return new String[] {
+			});
+        charMap.put('P', new String[] {
 				"******   ",
 				"**    ** ",
 				"**     **",
@@ -50,10 +51,8 @@ public class OOPSBannerApp {
 				"**       ",
 				"**       ",
 				"**       "
-			};
-		}
-		public static String[] getSPattern() {
-			return new String[] {
+			});
+        charMap.put('S',new String[] {
 				"   ***** ",
 				" **      ",
 				"**       ",
@@ -63,20 +62,26 @@ public class OOPSBannerApp {
 				"       **",
 				"      ** ",
 				" *****   "
-			};
-		}
-        public void printMessage(){
-            String[] oPattern = getOPattern();
-		    String[] pPattern = getPPattern();
-		    String[] sPattern = getSPattern();
+			});
+         return charMap;
+     }
 
-            for (int i = 0; i < oPattern.length; i++) {
-                System.out.println(oPattern[i] + " " + oPattern[i] +  " " + pPattern[i] + " " + sPattern[i]);
-            }
-        }
-    }
-    public static void main(String[] args) {
-        CharacterPatternMap cpm = new CharacterPatternMap();
-        cpm.printMessage();
-    }
+     // Example of method to display banner:
+     public static void displayBanner(String message, HashMap<Character, String[]> charMap) {
+         // Loop through each line of the pattern height and build the banner line
+         int patternHeight = charMap.get('O').length;
+         for (int line = 0; line < patternHeight; line++) {
+             StringBuilder sb = new StringBuilder();
+             for (char ch : message.toCharArray()) {
+                 String[] pattern = charMap.get(ch);
+                 sb.append(pattern[line]).append(" "); // Adding space between characters
+             }
+             System.out.println(sb.toString());
+         }
+     }
+     public static void main(String args[]){
+        HashMap<Character,String[]> charMap = createCharacterMap();
+        String message = "OOPS";
+        displayBanner(message,charMap);
+     }
 }
